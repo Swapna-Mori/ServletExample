@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,16 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class CustomerRegistrationServlet
  */
-@WebServlet("/CustomerRegistrationServlet")
+@WebServlet("/CustomerRegistrationServlet123")
 public class CustomerRegistrationServlet extends HttpServlet {
 	static Connection con; // = null;
 	static PreparedStatement pstmt; // = null;
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//set response content type
 	try {
@@ -47,8 +46,12 @@ public class CustomerRegistrationServlet extends HttpServlet {
 		int i = pstmt.executeUpdate();
 		if(i != 0) {
 			out.println("inserted successfully");
+			RequestDispatcher rd = request.getRequestDispatcher("SuccessServlet");
+			rd.forward(request, response);
 		}else {
 			out.println("Not inserted");
+			RequestDispatcher rd = request.getRequestDispatcher("CustomerRegistration.html");
+			rd.include(request, response);
 		}
 		
 	}catch (Exception e) {
